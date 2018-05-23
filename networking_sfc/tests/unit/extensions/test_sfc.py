@@ -68,7 +68,7 @@ class SfcExtensionTestCase(test_api_v2_extension.ExtensionTestCase):
     def _get_expected_port_chain(data):
         port_chain = data['port_chain']
         chain_params = port_chain.get('chain_parameters') or dict()
-        chain_params.setdefault('correlation', 'mpls')
+        chain_params.setdefault('correlation', 'nsh')
         chain_params.setdefault('symmetric', False)
         ret = {'port_chain': {
             'description': port_chain.get('description') or '',
@@ -115,14 +115,14 @@ class SfcExtensionTestCase(test_api_v2_extension.ExtensionTestCase):
         self._test_create_port_chain(description='desc',
                                      name='test1',
                                      chain_parameters={'symmetric': False,
-                                                       'correlation': 'mpls'},
+                                                       'correlation': 'nsh'},
                                      flow_classifiers=[])
 
     def test_create_port_chain_all_fields_with_symmetric(self):
         self._test_create_port_chain(description='desc',
                                      name='test1',
                                      chain_parameters={'symmetric': True,
-                                                       'correlation': 'mpls'},
+                                                       'correlation': 'nsh'},
                                      flow_classifiers=[])
 
     def test_create_port_chain_none_chain_parameters(self):
@@ -133,7 +133,7 @@ class SfcExtensionTestCase(test_api_v2_extension.ExtensionTestCase):
 
     def test_create_port_chain_multiple_chain_parameters(self):
         self._test_create_port_chain(chain_parameters={
-            'correlation': 'mpls',
+            'correlation': 'nsh',
             'symmetric': True
         })
 
@@ -209,7 +209,7 @@ class SfcExtensionTestCase(test_api_v2_extension.ExtensionTestCase):
         tenant_id = _uuid()
         data = {'port_chain': {
             'port_pair_groups': [_uuid()],
-            'chain_parameters': {'symmetric': 'abc', 'correlation': 'mpls'},
+            'chain_parameters': {'symmetric': 'abc', 'correlation': 'nsh'},
             'tenant_id': tenant_id, 'project_id': tenant_id
         }}
         self.assertRaises(

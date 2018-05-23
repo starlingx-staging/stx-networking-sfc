@@ -215,7 +215,7 @@ class SfcDbPluginTestCaseBase(
     @staticmethod
     def _get_expected_port_chain(port_chain):
         chain_params = port_chain.get('chain_parameters') or dict()
-        chain_params.setdefault('correlation', 'mpls')
+        chain_params.setdefault('correlation', 'nsh')
         chain_params.setdefault('symmetric', False)
         ret = {
             'name': port_chain.get('name') or '',
@@ -345,7 +345,7 @@ class SfcDbPluginTestCase(
                 'flow_classifiers': [],
                 'name': 'abc',
                 'description': 'def',
-                'chain_parameters': {'symmetric': False, 'correlation': 'mpls'}
+                'chain_parameters': {'symmetric': False, 'correlation': 'nsh'}
             })
 
     def test_create_port_chain_all_fields_with_chain_id(self):
@@ -356,7 +356,7 @@ class SfcDbPluginTestCase(
                 'name': 'abc',
                 'description': 'def',
                 'chain_parameters': {'symmetric': False,
-                                     'correlation': 'mpls'},
+                                     'correlation': 'nsh'},
                 'chain_id': 99
             })
 
@@ -367,7 +367,7 @@ class SfcDbPluginTestCase(
                 'flow_classifiers': [],
                 'name': 'abc',
                 'description': 'def',
-                'chain_parameters': {'symmetric': True, 'correlation': 'mpls'}
+                'chain_parameters': {'symmetric': True, 'correlation': 'nsh'}
             })
 
     def test_create_port_chain_multi_port_pair_groups(self):
@@ -439,7 +439,7 @@ class SfcDbPluginTestCase(
         with self.port_pair_group(port_pair_group={}) as pg:
             self._test_create_port_chain({
                 'chain_parameters': {'symmetric': False,
-                                     'correlation': 'mpls'},
+                                     'correlation': 'nsh'},
                 'port_pair_groups': [pg['port_pair_group']['id']]
             })
 
@@ -1200,7 +1200,7 @@ class SfcDbPluginTestCase(
                 'port_pair_groups': [pg['port_pair_group']['id']],
             }) as pc:
                 updates = {
-                    'chain_parameters': {'correlation': 'mpls'}
+                    'chain_parameters': {'correlation': 'nsh'}
                 }
                 req = self.new_update_request(
                     'port_chains', {'port_chain': updates},
@@ -1349,11 +1349,11 @@ class SfcDbPluginTestCase(
             with self.port_pair(port_pair={
                 'ingress': src_port['port']['id'],
                 'egress': dst_port['port']['id'],
-                'service_function_parameters': {'correlation': 'mpls'}
+                'service_function_parameters': {'correlation': 'nsh'}
             }) as pp1, self.port_pair(port_pair={
                 'ingress': dst_port['port']['id'],
                 'egress': src_port['port']['id'],
-                'service_function_parameters': {'correlation': 'mpls'}
+                'service_function_parameters': {'correlation': 'nsh'}
             }) as pp2:
                 self._test_create_port_pair_group({
                     'port_pairs': [
@@ -1373,7 +1373,7 @@ class SfcDbPluginTestCase(
             with self.port_pair(port_pair={
                 'ingress': src_port['port']['id'],
                 'egress': dst_port['port']['id'],
-                'service_function_parameters': {'correlation': 'mpls'}
+                'service_function_parameters': {'correlation': 'nsh'}
             }) as pp1, self.port_pair(port_pair={
                 'ingress': dst_port['port']['id'],
                 'egress': src_port['port']['id'],
@@ -1543,11 +1543,11 @@ class SfcDbPluginTestCase(
             with self.port_pair(port_pair={
                 'ingress': port1['port']['id'],
                 'egress': port2['port']['id'],
-                'service_function_parameters': {'correlation': 'mpls'}
+                'service_function_parameters': {'correlation': 'nsh'}
             }) as pp1, self.port_pair(port_pair={
                 'ingress': port2['port']['id'],
                 'egress': port3['port']['id'],
-                'service_function_parameters': {'correlation': 'mpls'}
+                'service_function_parameters': {'correlation': 'nsh'}
             }) as pp2, self.port_pair(port_pair={
                 'ingress': port3['port']['id'],
                 'egress': port4['port']['id'],
@@ -1555,7 +1555,7 @@ class SfcDbPluginTestCase(
             }) as pp3, self.port_pair(port_pair={
                 'ingress': port4['port']['id'],
                 'egress': port1['port']['id'],
-                'service_function_parameters': {'correlation': 'mpls'}
+                'service_function_parameters': {'correlation': 'nsh'}
             }) as pp4:
                 with self.port_pair_group(port_pair_group={
                     'name': 'test1',

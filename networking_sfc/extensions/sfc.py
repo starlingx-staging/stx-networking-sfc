@@ -40,7 +40,7 @@ SFC_EXT = "sfc"
 SFC_PREFIX = "/sfc"
 
 # Default Chain Parameters
-DEFAULT_CHAIN_CORRELATION = 'mpls'
+DEFAULT_CHAIN_CORRELATION = 'nsh'
 DEFAULT_CHAIN_SYMMETRY = False
 DEFAULT_CHAIN_PARAMETERS = {'correlation': DEFAULT_CHAIN_CORRELATION,
                             'symmetric': DEFAULT_CHAIN_SYMMETRY}
@@ -214,7 +214,13 @@ def normalize_chain_parameters(parameters):
 
 
 def normalize_sf_parameters(parameters):
-    return parameters if parameters else DEFAULT_SF_PARAMETERS
+    if not parameters:
+        return DEFAULT_SF_PARAMETERS
+    if 'correlation' not in parameters:
+        parameters['correlation'] = DEFAULT_SF_PARAMETERS['correlation']
+    if 'weight' not in parameters:
+        parameters['weight'] = DEFAULT_SF_PARAMETERS['weight']
+    return parameters
 
 
 def normalize_ppg_parameters(parameters):
@@ -274,7 +280,7 @@ RESOURCE_ATTRIBUTE_MAP = {
                 'type:dict': {
                     'correlation': {
                         'default': DEFAULT_SF_PARAMETERS['correlation'],
-                        'type:values': [None, 'mpls']
+                        'type:values': [None, 'mpls', 'nsh']
                     },
                     'weight': {
                         'default': DEFAULT_SF_PARAMETERS['weight'],
@@ -334,7 +340,7 @@ RESOURCE_ATTRIBUTE_MAP = {
                 'type:dict': {
                     'correlation': {
                         'default': DEFAULT_CHAIN_PARAMETERS['correlation'],
-                        'type:values': ['mpls']
+                        'type:values': ['mpls', 'nsh']
                     },
                     'symmetric': {
                         'default': DEFAULT_CHAIN_PARAMETERS['symmetric'],
