@@ -1,5 +1,4 @@
 [gerrit]
 host=review.openstack.org
 port=29418
-project=openstack/networking-sfc.git
-defaultbranch=stable/pike
+project=openstack/stx-networking-sfc.git
